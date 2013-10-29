@@ -7,7 +7,7 @@ class Evaluator():
     RATING = 'rating'
 
     def __init__(self,path='data/ratings.csv'):
-        self.ratings = load_ratings(path)
+        self.load_ratings(path)
 
     def load_ratings(self,path):
         r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING])
