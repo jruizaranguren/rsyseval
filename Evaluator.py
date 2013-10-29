@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn import cross_validation
 
 class Evaluator():
     DOC_ID = 'docId'
@@ -10,26 +11,30 @@ class Evaluator():
         self.load_ratings(path)
 
     def load_ratings(self,path):
-        r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING])
+        self.r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING])
         self.ratings = r.pivot(self.USER_ID,self.DOC_ID,self.RATING)
-        self.user_means = r.mean(axis=1)
+        self.user_means = self.r.mean(axis=1)
 
     def normalized_ratings(self):
         return (self.ratings.T - self.user_means).T
 
-    def split_folds(frame,nfolds = 5):
+    def split_folds(self,n_folds = 5):
+        skf = cross_validation.StratifiedKFold(self.r,self.r.index,n_folds)
+
+        #for train_index, test_index in skf:
+	       # print("TRAIN:", train_index, "TEST:", test_index)
+	       # X_train, X_test = r[train_index], r[test_index]
+
+    def get_metrics(self):
         pass
 
-    def get_metrics():
+    def get_algorithms(self):
         pass
 
-    def get_algorithms():
+    def write_to_csv(self,evals):
         pass
 
-    def write_to_csv(evals):
-        pass
-
-    def eval():
+    def eval(self):
         folds = split_folds(load_frame(path))
 
         fmetrics = get_metrics()
