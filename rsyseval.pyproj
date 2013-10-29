@@ -32,6 +32,7 @@
     <Content Include="data\movie-titles.csv" />
     <Content Include="data\ratings.csv" />
     <Content Include="data\users.csv" />
+    <Content Include="The_size_of_things.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

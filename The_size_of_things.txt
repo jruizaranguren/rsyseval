@@ -1,0 +1,33 @@
+5 fold cross validation
+	Test on 5 items per test user / per data set.
+	Predict 5 test items.
+	Recommend 10 items, excluding items rated in training set.
+
+1. Split data-set in 5 pieces.
+2. Remove random user/item rating per piece, which constitutes the validation set.
+3. for each fold in folds:
+	train(fold)
+	score(items)
+	recommend(items)
+
+ratings.csv		[338355 * 3]
+
+#users = 5564
+#films = 100
+pivot_ratings	[5564 * 100]   sparsity = [338355 / 556400]
+
+#test_users_items = [5564 * 5] = 27820
+
+#training_ratings = 338355 - 27820 = 310535
+
+#train_fold_ratings = 62107
+
+for each fold:
+     fold_prediction = [5564 * 5]
+	 fold_recommendations = [5564 * 10]
+
+for each algorithm
+
+results =  5 (folds) * [[5564*5],[5564*10]]
+
+
