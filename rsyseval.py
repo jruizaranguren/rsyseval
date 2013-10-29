@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def load_frame(path='ratings.csv'):
+def load_frame(path='data/ratings.csv'):
     pass
 
 def split_folds(frame,nfolds = 5):

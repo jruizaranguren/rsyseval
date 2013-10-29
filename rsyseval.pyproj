@@ -24,5 +24,14 @@
   <ItemGroup>
     <Compile Include="rsyseval.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\movie-tags.csv" />
+    <Content Include="data\movie-titles.csv" />
+    <Content Include="data\ratings.csv" />
+    <Content Include="data\users.csv" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
