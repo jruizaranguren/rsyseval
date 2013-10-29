@@ -18,12 +18,9 @@ class Evaluator():
     def normalized_ratings(self):
         return (self.ratings.T - self.user_means).T
 
-    def split_folds(self,n_folds = 5):
+    def kfold(self,n_folds = 5):
         skf = cross_validation.StratifiedKFold(self.r,self.r.index,n_folds)
-
-        #for train_index, test_index in skf:
-	       # print("TRAIN:", train_index, "TEST:", test_index)
-	       # X_train, X_test = r[train_index], r[test_index]
+        return [[train_ix,test_ix] for train_ix, text_ix in skf]
 
     def get_metrics(self):
         pass
