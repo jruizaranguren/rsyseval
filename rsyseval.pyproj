@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>3976aedb-0a8b-4e8c-83ca-0af1be6085a4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>rsyseval.py</StartupFile>
+    <StartupFile>Evaluator.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="rsyseval.py" />
+    <Compile Include="Evaluator.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
