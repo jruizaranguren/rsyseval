@@ -1,16 +1,17 @@
 import pandas as pd
 import numpy as np
-from Fold import *
+from structures import *
 from sklearn import cross_validation
 
 class Evaluator():
+    """Loads evaluation experiment: data, algorithms and metrics in order to compare recommenders performance"""
     DOC_ID = 'docId'
     USER_ID = 'userId'
     RATING = 'rating'
 
-    def __init__(self,path='data/ratings.csv'):
+    def __init__(self,path='data/ratings.csv',n_folds=5):
         self.load_ratings(path)
-        self.kfold()
+        self.kfold(n_folds)
 
     def load_ratings(self,path):
         self.r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING])
@@ -20,28 +21,24 @@ class Evaluator():
     def normalized_ratings(self):
         return (self.ratings.T - self.user_means).T
 
-    def kfold(self,n_folds = 5):
+    def kfold(self,n_folds):
         skf = cross_validation.StratifiedKFold(self.r.userId,n_folds)
         self.folds = [Fold(train_ix,test_ix) for train_ix, test_ix in skf]
 
-    def get_metrics(self):
-        pass
+    def set_metrics(self,metrics):
+        self.metrics = metrics
 
-    def get_algorithms(self):
-        pass
+    def set_algorithms(self,algorithms):
+        self.algorithms = algorithms
 
     def write_to_csv(self,evals):
         pass
 
     def eval(self):
-        folds = split_folds(load_frame(path))
-
-        fmetrics = get_metrics()
-
         evals = []
-        for algorithm in get_algorithms():
-            result = algorithm(folds)
-            evals.append([metric(result) for metric in fmetrics])
+        for algorithm in self.algorithms:
+            rec_exec = algorithm(folds,self.r)
+            evals.append([metric(rec_exec) for metric in self.metrics])
 
         write_to_csv(evals)
 
