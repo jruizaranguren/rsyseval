@@ -24,7 +24,7 @@
   <ItemGroup>
     <Compile Include="rsyseval.py" />
     <Compile Include="ralgorithm.py" />
-    <Compile Include="structures.py" />
+    <Compile Include="rstructures.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
