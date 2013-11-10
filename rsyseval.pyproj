@@ -22,9 +22,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="itemitemcf.py" />
     <Compile Include="rsyseval.py" />
     <Compile Include="ralgorithm.py" />
     <Compile Include="rstructures.py" />
+    <Compile Include="userusercf.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
