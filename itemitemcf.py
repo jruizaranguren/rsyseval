@@ -41,9 +41,13 @@ class UserUserCf:
         neighs = self.get_neighbours(user_ratings,user,item)
         return user_ratings[neighs.index].dot(neighs) / np.abs(neighs).sum()
 
-    def process(self,pairs,kneighs=20):
+    def find_similar(self, items, topk=5):
+        similars = self.correlations[items].drop(items).sum(axis=1).order(ascending=False)[:topk]
+        for item, score in similars.iteritems():
+            print "{},{},{}".format(item,round(score,4),self.titles.ix[item][0])
+
+    def recommend(self,pairs,kneighs=20):
         for user, item in pairs:
             s = self.score(user,item)
             print "{},{},{},{}".format(user,item,round(s,4),self.titles.ix[item][0])
 
-UserUserCf().process(test_pairs)
