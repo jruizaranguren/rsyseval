@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from itemitemcf import *
 from rstructures import *
 from ralgorithm import *
 from sklearn import cross_validation
@@ -38,11 +39,17 @@ class Evaluator():
 
     def eval(self):
         evals = []
-        for algorithm in self.algorithms:
-            rec_exec = algorithm(folds,self.r,self.users)
-            evals.append([metric(rec_exec) for metric in self.metrics])
-
-        write_to_csv(evals)
+        #for algorithm in self.algorithms:
+        #    rec_exec = algorithm(folds,self.r,self.users)
+        #    evals.append([metric(rec_exec) for metric in self.metrics])
+        for fold in self.folds:
+            ii = ItemItemCf(fold=self.ratings.ix[fold.train_ix])
+            # recomendar los ratings de test
+            #ii.recommend(assignment_pairs)
+            
+        #write_to_csv(evals)
 
 
     
+eval = Evaluator()
+eval.eval()

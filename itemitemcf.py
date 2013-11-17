@@ -11,17 +11,20 @@ class ItemItemCf:
     USER_ID = 'userId'
     RATING = 'rating'
     TITLE = 'title'
-    def __init__(self,ratings_path='data/ratings.csv',titles_path='data/movie-titles.csv',kneighs=20):
-        self.load_ratings(ratings_path)
+    def __init__(self,ratings_path='data/ratings.csv',titles_path='data/movie-titles.csv',fold=None,kneighs=20):
+        self.load_ratings(ratings_path,fold)
         self.calc_correlations()
         self.load_titles(titles_path)
         self.kneighs=kneighs
 
-    def load_ratings(self,path):
-        r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING])
-        self.ratings = r.pivot(self.USER_ID,self.DOC_ID,self.RATING)  # Users x Items
+    def load_ratings(self,path,fold):
+        if fold is None:
+            r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING]) 
+            self.ratings = r.pivot(self.USER_ID,self.DOC_ID,self.RATING)  # Users x Items
+        else:
+            self.ratings = fold
         self.user_means = self.ratings.mean(axis=1)
-        self.centered = (self.ratings.T - self.user_means) # Items x Users
+        self.centered = (self.ratings.T - self.user_means) # Items x Users    
 
     def set_kneighs(self, kneighs):
         self.kneighs = kneighs
@@ -49,7 +52,13 @@ class ItemItemCf:
             print "{},{},{}".format(item,round(score,4),self.titles.ix[item][0])
 
     def recommend(self,pairs,kneighs=20):
+        scores = []
         for user, item in pairs:
             s = self.score(user,item)
+            scores.append(s)
             print "{},{},{},{}".format(user,item,round(s,4),self.titles.ix[item][0])
+
+        return scores
+
+    
 
