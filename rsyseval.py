@@ -4,6 +4,7 @@ from itemitemcf import *
 from rstructures import *
 from ralgorithm import *
 from sklearn import cross_validation
+from sklearn.metrics import mean_squared_error
 
 class Evaluator():
     """Loads evaluation experiment: data, algorithms and metrics in order to compare recommenders performance"""
@@ -42,14 +43,18 @@ class Evaluator():
         #for algorithm in self.algorithms:
         #    rec_exec = algorithm(folds,self.r,self.users)
         #    evals.append([metric(rec_exec) for metric in self.metrics])
+        
+        j=0
+        kn=[10,25,40,50]
         for fold in self.folds:
-            ii = ItemItemCf(fold=self.ratings.ix[fold.train_ix])
+            ii = ItemItemCf(fold=self.r.ix[fold.train_ix])
             # recomendar los ratings de test
-            #ii.recommend(assignment_pairs)
+            test_ratings = self.r.ix[fold.test_ix]
+            scores = ii.recommend(test_ratings[['userId','docId']].as_matrix(),kneighs=kn[j])
+            scores[np.isnan(scores)] = 0
+            print kn[j],mean_squared_error(test_ratings['rating'],scores)
+            j+=1
             
         #write_to_csv(evals)
+        return scores
 
-
-    
-eval = Evaluator()
-eval.eval()

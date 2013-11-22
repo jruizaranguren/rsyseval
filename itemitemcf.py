@@ -18,11 +18,8 @@ class ItemItemCf:
         self.kneighs=kneighs
 
     def load_ratings(self,path,fold):
-        if fold is None:
-            r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING]) 
-            self.ratings = r.pivot(self.USER_ID,self.DOC_ID,self.RATING)  # Users x Items
-        else:
-            self.ratings = fold
+        r = pd.read_csv(path,names=[self.USER_ID,self.DOC_ID,self.RATING]) if fold is None else fold
+        self.ratings = r.pivot(self.USER_ID,self.DOC_ID,self.RATING)  # Users x Items
         self.user_means = self.ratings.mean(axis=1)
         self.centered = (self.ratings.T - self.user_means) # Items x Users    
 
@@ -51,12 +48,19 @@ class ItemItemCf:
         for item, score in similars.iteritems():
             print "{},{},{}".format(item,round(score,4),self.titles.ix[item][0])
 
-    def recommend(self,pairs,kneighs=20):
-        scores = []
+    def recommend(self,pairs,kneighs=20,toConsole=False):
+        self.set_kneighs(kneighs)
+        scores = np.ndarray(len(pairs))
+        i = 0
         for user, item in pairs:
-            s = self.score(user,item)
-            scores.append(s)
-            print "{},{},{},{}".format(user,item,round(s,4),self.titles.ix[item][0])
+            try:
+                s = self.score(user,item)
+            except:
+                s = 0
+            scores[i] = s
+            i += 1
+            if toConsole:
+                print "{},{},{},{}".format(user,item,round(s,4),self.titles.ix[item][0])
 
         return scores
 
