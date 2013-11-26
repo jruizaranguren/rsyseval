@@ -26,6 +26,7 @@
     <Compile Include="rsyseval.py" />
     <Compile Include="ralgorithm.py" />
     <Compile Include="rstructures.py" />
+    <Compile Include="svdcf.py" />
     <Compile Include="userusercf.py" />
   </ItemGroup>
   <ItemGroup>
